@@ -22,7 +22,7 @@ class FortuneTellingMachine extends React.Component {
         <br />
         <input type="text" />
         <button>Add Fortune</button>
-        <h1>{pick}</h1>
+        {pick ? <h1>{pick}</h1> : null}
       </>
     );
   }
