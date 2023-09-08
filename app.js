@@ -1,17 +1,34 @@
 class FortuneTellingMachine extends React.Component {
-  fortuneList = ["fortune1", "fortune2", "fortune3"];
-
   state = {
+    fortuneList: ["fortune1", "fortune2", "fortune3"],
     pick: "",
+    value: "",
   };
 
   handleDrawFortune() {
-    const index = Math.floor(Math.random() * this.fortuneList.length);
-    const drawnFortune = this.fortuneList[index];
+    const index = Math.floor(Math.random() * this.state.fortuneList.length);
+    const drawnFortune = this.state.fortuneList[index];
     this.setState({
       pick: drawnFortune,
     });
   }
+
+  handleAddFortune = e => {
+    if (this.state.value === "") return alert("Insert new fortune");
+    const fortuneList = [...this.state.fortuneList];
+    fortuneList.push(this.state.value);
+    this.setState({
+      fortuneList,
+      value: "",
+    });
+    alert(`Added new fortune. List of available options: ${fortuneList}`);
+  };
+
+  handleInputChange = e => {
+    this.setState({
+      value: e.target.value,
+    });
+  };
   render() {
     const { pick } = this.state;
     return (
@@ -20,8 +37,12 @@ class FortuneTellingMachine extends React.Component {
         <button onClick={() => this.handleDrawFortune()}>Draw Fortune</button>
         <br />
         <br />
-        <input type="text" />
-        <button>Add Fortune</button>
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleInputChange}
+        />
+        <button onClick={() => this.handleAddFortune()}>Add Fortune</button>
         {pick ? <h1>{pick}</h1> : null}
       </>
     );
